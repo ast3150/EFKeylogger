@@ -1,6 +1,7 @@
 object Form1: TForm1
   Left = 0
   Top = 0
+  ActiveControl = Memo2
   Caption = 'Form1'
   ClientHeight = 282
   ClientWidth = 418
@@ -27,8 +28,6 @@ object Form1: TForm1
     Top = 57
     Width = 144
     Height = 136
-    Lines.Strings = (
-      'Memo1')
     ReadOnly = True
     TabOrder = 1
   end
@@ -37,8 +36,6 @@ object Form1: TForm1
     Top = 57
     Width = 144
     Height = 136
-    Lines.Strings = (
-      'Memo1')
     TabOrder = 2
   end
   object Timer1: TTimer

