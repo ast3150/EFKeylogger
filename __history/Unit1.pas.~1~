@@ -53,7 +53,7 @@ Repeat
   keyresult := GetAsyncKeyState(ikey);
   if KeyResult = -32767 then
   begin
-  case Ikey of  // Defines key values for exceptions
+  case Ikey of
 8: DisplayAction(' [BACKSPACE] ');
 9: DisplayAction(' [TAB] ');
 12: DisplayAction(' [ALT] ');
