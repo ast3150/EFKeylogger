@@ -18,17 +18,33 @@ object Form1: TForm1
     Top = 232
     Width = 75
     Height = 25
-    Caption = 'Button1'
+    Caption = 'Clear'
     TabOrder = 0
     OnClick = Button1Click
   end
   object Memo1: TMemo
-    Left = 41
+    Left = 233
     Top = 57
-    Width = 185
-    Height = 89
+    Width = 144
+    Height = 136
     Lines.Strings = (
       'Memo1')
+    ReadOnly = True
     TabOrder = 1
+  end
+  object Memo2: TMemo
+    Left = 41
+    Top = 57
+    Width = 144
+    Height = 136
+    Lines.Strings = (
+      'Memo1')
+    TabOrder = 2
+  end
+  object Timer1: TTimer
+    Interval = 1
+    OnTimer = Timer1Timer
+    Left = 112
+    Top = 216
   end
 end
