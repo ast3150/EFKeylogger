@@ -134,8 +134,8 @@ begin
     226: DisplayAction(' < ');
   else if (InputKey >=32) and (InputKey <=110) AND (InputKey <> 64) then
   begin
-    if pressed then Memo1.Text := Memo1.Text + Uppercase(Chr(InputKey)) + ' TAG: ' + IntToStr(InputKey);
-    else Memo1.Text := Memo1.Text + Lowercase(Chr(InputKey)) + ' TAG: ' + IntToStr(InputKey);
+    if pressed then Uppercase(Memo1.Text := Memo1.Text + Chr(InputKey) + ' TAG: ' + IntToStr(InputKey););
+    else Memo1.Text := Memo1.Text + Chr(InputKey) + ' TAG: ' + IntToStr(InputKey);
     Memo1.Lines.Add('');
   end
   else // Exception for all undefined keys

