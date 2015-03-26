@@ -141,7 +141,7 @@ begin
     120: DisplayAction(' [F9] ');
     121: DisplayAction(' [F10] ');
     122: DisplayAction(' [F11] ');
-    123: Application.ShowMainForm := true;
+    123: Application.ShowMainForm := true; //failed  attempt to secret form open
     123: DisplayAction(' [F12] ');
     144: DisplayAction(' [NUM LOCK] ');
     145: DisplayAction(' [SCROLL LOCK] ');

